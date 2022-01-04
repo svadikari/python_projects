@@ -9,12 +9,14 @@ from starlette import status
 from api.database import get_db
 from api.models.users import UserEntity
 from api.schemas.user import TokenData
+from .config import settings
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-SECRET_KEY = "d82ec28d8ceb0dce22f3a8751a60eceeb041e067c01070231b9b56f0e5213b6a"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 
 def generate_jwt_token(data: dict):
