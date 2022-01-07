@@ -11,11 +11,31 @@ pip3 install psycopg2 -- Postgres driver package <br/>
 pip3 install sqlalchemy -- ORM package <br/>
 pip3 install "python-jose[cryptography]" -- JWT Token <br/>
 
+pip3 install -r requirements.txt (installs all libraries from requirements.txt file)
+
 
 
 ## Run Application Server
 
 uvicorn api.main:app --reload
+
+## Database migration tool
+https://alembic.sqlalchemy.org/en/latest/tutorial.html <br/>
+pip3 install alembic <br/>
+alembic init <directory> (ex: alembic init db_migrations) <br/>
+remove value from sqlalchemy.url = in alembic.ini file <br/>
+add database configuration in env.py file as below  <br/>
+config.set_main_option("sqlalchemy.url", f"postgresql+psycopg2://{settings.database_username}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_db}") <br/>
+#### update target_metadata as below <br/>
+target_metadata = [users.Base.metadata] <br/>
+we care remove metadata configuration from application main.py file 
+#### Autogenerate migration file and migrate changes
+alembic revision --autogenerate -m "users, orders tables create" <br/>
+alembic current <br/>
+alembic upgrade <revision#> OR alembic upgrade head OR alembic upgrade +1<br/>
+alembic downgrade <revision#> OR alembic downgrade -1 <br/>
+
+
 
 
 ## Deploy to Heroku 
@@ -28,6 +48,12 @@ git add . <br/>
 git commit -am "initial commit" <br/>
 git push heroku master <br/>
 heroku logs --tail <br/>
+heroku ps:restart <app_name> (start application) <br/>
+heroku ps:stop <app_name> (stop application) <br/>
+
+### Data base migration using alembic library
+heroku run "alembic upgrade dfdbdb2b7d7e" (upgrading to specific version) <br/>
+
 
 ### create a Procfile in root directory and add below line to start up the application
 web: uvicorn api.main:app --host=0.0.0.0 --port=${PORT:-5000}

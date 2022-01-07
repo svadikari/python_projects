@@ -1,3 +1,4 @@
+alembic==1.7.5
 anyio==3.4.0
 asgiref==3.4.1
 attrs==21.2.0
@@ -33,6 +34,7 @@ isodate==0.6.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
 jsonschema==4.2.1
+Mako==1.1.6
 MarkupSafe==2.0.1
 openapi-schema-validator==0.1.5
 openapi-spec-validator==0.3.1
