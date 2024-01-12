@@ -3,7 +3,7 @@ from fastapi import status
 from app.main import app
 from app.schemas import ProductBase
 
-client = TestClient(app= app)
+client = TestClient(app=app)
 
 
 def test_get_products():
