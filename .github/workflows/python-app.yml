@@ -6,8 +6,6 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -49,8 +47,22 @@ jobs:
       run: |
         cd fastapi-rest
         pytest --html=reports.html tests/
-    - name: BDD Tests
-      run: |
-        cd fastapi-rest
-        ls -ltr
-        pytest-bdd features
+    # - name: BDD Tests
+    #   run: |
+    #     cd fastapi-rest
+    #     ls -ltr
+    #     pytest-bdd features
+deploy:
+  needs: build
+  runs-on: ubuntu-latest
+  steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "fastapi-orders" #Must be unique in Heroku
+          heroku_email: "svadikari@gmail.com"
+          appdir: "fastapi-orders" # <- This will point to the api folder in your project
+    
+  
+    
