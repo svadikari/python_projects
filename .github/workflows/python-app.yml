@@ -45,7 +45,11 @@ jobs:
         port: 5432
       id: postgres
     
-    - name: Test with pytest
+    - name: Test
       run: |
         cd fastapi-rest
-        pytest
+        pytest --html=reports.html tests/
+    - name: BDD Tests
+      run: |
+        cd fastapi-rest
+        pytest-bdd features/
