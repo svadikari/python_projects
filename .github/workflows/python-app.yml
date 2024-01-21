@@ -52,4 +52,5 @@ jobs:
     - name: BDD Tests
       run: |
         cd fastapi-rest
+        ls -ltr
         pytest-bdd features/
