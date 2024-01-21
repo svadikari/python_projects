@@ -53,4 +53,4 @@ jobs:
       run: |
         cd fastapi-rest
         ls -ltr
-        pytest-bdd features/
+        pytest-bdd features
